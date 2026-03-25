@@ -1,4 +1,4 @@
-package com.backend.aaz.models.dto;
+package com.backend.aaz.models.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

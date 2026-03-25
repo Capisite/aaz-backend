@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.aaz.models.User;
-import com.backend.aaz.models.dto.LoginRequestDTO;
-import com.backend.aaz.models.dto.LoginResponseDTO;
-import com.backend.aaz.models.dto.RegisterDTO;
+import com.backend.aaz.models.user.User;
+import com.backend.aaz.models.user.dto.LoginRequestDTO;
+import com.backend.aaz.models.user.dto.LoginResponseDTO;
+import com.backend.aaz.models.user.dto.RegisterDTO;
 import com.backend.aaz.repositories.UserRepository;
 import com.backend.aaz.config.security.TokenService;
 

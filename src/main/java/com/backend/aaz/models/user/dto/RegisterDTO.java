@@ -1,6 +1,7 @@
-package com.backend.aaz.models.dto;
+package com.backend.aaz.models.user.dto;
 
-import com.backend.aaz.models.enums.UserRole;
+import com.backend.aaz.models.user.enums.UserRole;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

@@ -1,3 +1,3 @@
-package com.backend.aaz.models.dto;
+package com.backend.aaz.models.user.dto;
 
 public record LoginResponseDTO(String token) {}

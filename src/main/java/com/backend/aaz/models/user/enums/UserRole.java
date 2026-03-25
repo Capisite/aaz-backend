@@ -1,4 +1,4 @@
-package com.backend.aaz.models.enums;
+package com.backend.aaz.models.user.enums;
 
 public enum UserRole {
  

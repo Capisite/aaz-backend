@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
-import com.backend.aaz.models.User;
+import com.backend.aaz.models.user.User;
 import com.backend.aaz.repositories.UserRepository;
 
 @Service

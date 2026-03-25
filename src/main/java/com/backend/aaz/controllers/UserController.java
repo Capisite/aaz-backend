@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.aaz.models.User;
+import com.backend.aaz.models.user.User;
 import com.backend.aaz.services.UserService;
 
 @RestController

@@ -1,4 +1,4 @@
-package com.backend.aaz.models;
+package com.backend.aaz.models.user;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.backend.aaz.models.enums.UserRole;
+import com.backend.aaz.models.user.enums.UserRole;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
