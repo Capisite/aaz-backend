@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.aaz.models.User;
-import com.backend.aaz.models.dto.AuthenticationDTO;
+import com.backend.aaz.models.dto.LoginRequestDTO;
 import com.backend.aaz.models.dto.LoginResponseDTO;
 import com.backend.aaz.models.dto.RegisterDTO;
 import com.backend.aaz.repositories.UserRepository;
@@ -33,7 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 

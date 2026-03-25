@@ -2,7 +2,7 @@ package com.backend.aaz.models.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record AuthenticationDTO(
+public record LoginRequestDTO(
 
     @NotBlank String username,
     @NotBlank String password
