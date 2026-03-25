@@ -32,8 +32,8 @@ public class UserService {
 
     private User getUserAndUpdate(User user, Long id) {
         User userToUpdate = userRepository.getReferenceById(id);
-        if (user.getName() != null) {
-            userToUpdate.setName(user.getName());
+        if (user.getFullName() != null) {
+            userToUpdate.setFullName(user.getFullName());
         }
         if (user.getEmail() != null) {
             userToUpdate.setEmail(user.getEmail());
