@@ -44,9 +44,11 @@ public class User implements UserDetails {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public User(String username, String encryptedPassword, UserRole role) {
+    public User(String username, String encryptedPassword, UserRole role, String email, String fullName) {
         this.username = username;
         this.password = encryptedPassword;
+        this.email = email;
+        this.fullName = fullName;
         this.role = role;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();

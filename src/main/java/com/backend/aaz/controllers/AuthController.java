@@ -44,10 +44,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data){
-        if(this.userRepository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().build();
+        if(this.userRepository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().body("Usuário já existe");
+        if(this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().body("Email já existe");
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.username(), encryptedPassword, data.role());
+        User newUser = new User(data.username(), encryptedPassword, data.role(), data.email(), data.fullName());
 
         this.userRepository.save(newUser);
 
