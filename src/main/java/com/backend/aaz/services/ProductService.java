@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.backend.aaz.exceptions.InsufficientStockException;
 import com.backend.aaz.exceptions.ProductNotFoundException;
 import com.backend.aaz.models.product.Product;
 import com.backend.aaz.models.product.dto.CreateProductDTO;
@@ -40,8 +39,7 @@ public class ProductService {
         Product product = new Product();
         product.setName(data.name());
         product.setDescription(data.description());
-        product.setPrice(data.price());
-        product.setQuantity(data.quantity());
+        product.setSellingPrice(data.sellingPrice());
         product.setCreatedAt(LocalDateTime.now());
         product.setUpdatedAt(LocalDateTime.now());
         return product;
@@ -56,7 +54,7 @@ public class ProductService {
         Product product = getById(id);
         if (data.name() != null) product.setName(data.name());
         if (data.description() != null) product.setDescription(data.description());
-        if (data.price() != null) product.setPrice(data.price());
+        if (data.sellingPrice() != null) product.setSellingPrice(data.sellingPrice());
         product.setUpdatedAt(LocalDateTime.now());
         return product;
     }
@@ -68,17 +66,12 @@ public class ProductService {
 
     public Product addStock(UUID id, int quantity) {
         Product product = getById(id);
-        product.setQuantity(product.getQuantity() + quantity);
         product.setUpdatedAt(LocalDateTime.now());
         return productRepository.save(product);
     }
 
     public Product removeStock(UUID id, int quantity) {
         Product product = getById(id);
-        if (product.getQuantity() < quantity) {
-            throw new InsufficientStockException(product.getQuantity(), quantity);
-        }
-        product.setQuantity(product.getQuantity() - quantity);
         product.setUpdatedAt(LocalDateTime.now());
         return productRepository.save(product);
     }

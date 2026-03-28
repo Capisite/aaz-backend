@@ -10,8 +10,7 @@ public record ProductResponseDTO(
     UUID id,
     String name,
     String description,
-    BigDecimal price,
-    Integer quantity
+    BigDecimal sellingPrice
 
 ) {
     public static ProductResponseDTO from(Product product) {
@@ -19,8 +18,7 @@ public record ProductResponseDTO(
             product.getId(),
             product.getName(),
             product.getDescription(),
-            product.getPrice(),
-            product.getQuantity()
+            product.getSellingPrice()
         );
     }
 }

@@ -10,6 +10,6 @@ public record UpdateProductDTO(
     String description,
 
     @DecimalMin(value = "0.0", inclusive = false)
-    BigDecimal price
+    BigDecimal sellingPrice
 
 ) {}
