@@ -1,6 +1,9 @@
 package com.backend.aaz.models.product.dto;
 
 import java.math.BigDecimal;
+import java.util.UUID;
+
+import com.backend.aaz.models.product.enums.UnitOfMeasure;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -11,14 +14,21 @@ public record CreateProductDTO(
     @NotBlank
     String name,
     
-    @NotBlank
     String description,
 
+    @NotNull
+    UUID categoryId,
+
     @NotBlank
+    String barcode,
+
+    @NotNull
+    UnitOfMeasure unitOfMeasure,
+
     String imageUrl,
 
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = false)
+    @DecimalMin(value = "0.01")
     BigDecimal sellingPrice
 
 ) {}

@@ -20,6 +20,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<StandardError> handleCategoryNotFound(CategoryNotFoundException e, HttpServletRequest request) {
+        String error = "Categoria não encontrada";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError err = new StandardError(LocalDateTime.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
     @ExceptionHandler(InsufficientStockException.class)
     public ResponseEntity<StandardError> handleInsufficientStock(InsufficientStockException e, HttpServletRequest request) {
         String error = "Estoque insuficiente";
