@@ -18,7 +18,7 @@ import com.backend.aaz.shared.models.user.dto.RegisterDTO;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -42,12 +42,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data){
-        if(this.userRepository.findByUsername(data.username()) != null) return ResponseEntity.badRequest().body("Usuário já existe");
-        if(this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().body("Email já existe");
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
+        if(this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().body("Email já cadastrado");
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.username(), encryptedPassword, data.role(), data.email(), data.fullName());
+        User newUser = new User(data.name(), encryptedPassword, data.role(), data.email(), true);
 
         this.userRepository.save(newUser);
 

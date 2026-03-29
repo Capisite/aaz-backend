@@ -2,8 +2,9 @@ package com.backend.aaz.shared.models.user.enums;
 
 public enum UserRole {
  
-    ADMIN("admin"),
-    USER("user");
+    MANAGER("Gerente"),
+    OPERATOR("Operador"),
+    VIEWER("Visualizador");
 
     private String role;
 

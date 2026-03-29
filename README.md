@@ -54,25 +54,24 @@ API de inventário construída com Spring Boot, JPA/Hibernate e autenticação b
 ## Endpoints Principais
 
 - **Autenticação**
-  - `POST /api/auth/login` — recebe `{ "email": "...", "password": "..." }` e retorna `{ "token": "..." }`
-  - `POST /api/auth/register` — cria um novo usuário (campos: `fullName`, `username`, `email`, `password`, `role`)
+  - `POST /api/v1/auth/login` — recebe `{ "email": "...", "password": "..." }` e retorna `{ "token": "..." }`
+  - `POST /api/v1/auth/register` — cria um novo usuário (requer `MANAGER`)
 - **Usuários**
-  - `GET /api/users/{id}` — requer autenticação
-  - `PUT /api/users/{id}` — requer autenticação
-  - `DELETE /api/users/{id}` — requer autenticação
+  - `GET /api/v1/users/{id}` — requer `MANAGER`
+  - `PATCH /api/v1/users/{id}` — requer `MANAGER`
 - **Produtos**
-  - `GET /api/products` — lista produtos (requer autenticação)
-  - `GET /api/products/{id}` — detalha produto (requer autenticação)
-  - `POST /api/products` — requer `ADMIN`
-  - `PUT /api/products/{id}` — requer `ADMIN`
-  - `DELETE /api/products/{id}` — requer `ADMIN`
-  - `PATCH /api/products/{id}/stock/add` — gerencia estoque (requer `ADMIN`)
-  - `PATCH /api/products/{id}/stock/remove` — gerencia estoque (requer `ADMIN`)
+  - `GET /api/v1/products` — lista produtos (público)
+  - `GET /api/v1/products/{id}` — detalha produto (público)
+  - `POST /api/v1/products` — requer `MANAGER`
+  - `PATCH /api/v1/products/{id}` — requer `MANAGER`
+  - `DELETE /api/v1/products/{id}` — arquiva produto (requer `MANAGER`)
+  - `PATCH /api/v1/products/{id}/stock/add` — gerencia estoque (requer `MANAGER`)
+  - `PATCH /api/v1/products/{id}/stock/remove` — gerencia estoque (requer `MANAGER`)
 
 ## Exemplo de Login
 
 ```bash
-curl -X POST http://localhost:8080/api/auth/login \
+curl -X POST http://localhost:8080/api/v1/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@email.com","password":"123"}'
 ```
@@ -86,19 +85,19 @@ curl -X POST http://localhost:8080/api/auth/login \
 - Utilize o token nas requisições protegidas:
 
 ```bash
-curl http://localhost:8080/api/products -H "Authorization: Bearer <jwt-token>"
+curl http://localhost:8080/api/v1/products -H "Authorization: Bearer <jwt-token>"
 ```
 
 ## Semeadura de Usuário Admin
 
-- Um usuário `ADMIN` pode ser criado via endpoint `POST /api/auth/register` passando o campo `"role": "ADMIN"`.
+- Um usuário `MANAGER` pode ser criado via endpoint `POST /api/v1/auth/register` passando o campo `"role": "MANAGER"`.
 - Senhas são armazenadas com `BCrypt`.
 
 ## Observações de Segurança
 
 - Configure `JWT_SECRET` em produção com um valor forte e mantido em segredo.
 - Mantenha o banco protegido e com credenciais seguras.
-- O controle de acesso garante que apenas administradores possam realizar operações de escrita e alteração de estoque em produtos.
+- O controle de acesso garante que apenas gerentes possam realizar operações de escrita e alteração de estoque em produtos.
 
 ## Versionamento
 

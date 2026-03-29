@@ -1,10 +1,13 @@
 package com.backend.aaz.modules.user;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.backend.aaz.shared.exceptions.UserNotFoundException;
 import com.backend.aaz.shared.models.user.User;
+import com.backend.aaz.shared.models.user.dto.UpdateUserDTO;
 
 @Service
 public class UserService {
@@ -15,37 +18,39 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getById(Long id) {
+    public User getById(UUID id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
     public User create(User user) {
         return userRepository.save(user);
     }
 
-    public User update(User user, Long id) {
-        User userToUpdate = getUserAndUpdate(user, id);
+    public User update(UpdateUserDTO data, UUID id) {
+        User userToUpdate = getUserAndUpdate(data, id);
         return userRepository.save(userToUpdate);
     }
 
-    private User getUserAndUpdate(User user, Long id) {
+    private User getUserAndUpdate(UpdateUserDTO data, UUID id) {
         User userToUpdate = userRepository.getReferenceById(id);
-        if (user.getFullName() != null) {
-            userToUpdate.setFullName(user.getFullName());
+        if (data.name() != null) {
+            userToUpdate.setName(data.name());
         }
-        if (user.getEmail() != null) {
-            userToUpdate.setEmail(user.getEmail());
+        if (data.email() != null) {
+            userToUpdate.setEmail(data.email());
         }
-        if (user.getPassword() != null) {
-            userToUpdate.setPassword(user.getPassword());
+        if (data.password() != null) {
+            userToUpdate.setPassword(data.password());
+        }
+        if (data.isActive() != null) {
+            userToUpdate.setIsActive(data.isActive());
+        }
+        if (data.role() != null) {
+            userToUpdate.setRole(data.role());
         }
         userToUpdate.setUpdatedAt(LocalDateTime.now());
         return userToUpdate;
-    }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
     }
 
 }

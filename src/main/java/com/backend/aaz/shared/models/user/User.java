@@ -3,6 +3,7 @@ package com.backend.aaz.shared.models.user;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.backend.aaz.shared.models.user.enums.UserRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,38 +33,52 @@ import lombok.NoArgsConstructor;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String fullName;
-    private String username;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private UserRole role;
 
+    @Column(nullable = false, length = 100)
+    private String name;
+    
+    @Column(nullable = false)
+    private Boolean isActive = true;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public User(String username, String encryptedPassword, UserRole role, String email, String fullName) {
-        this.username = username;
+    public User(String name, String encryptedPassword, UserRole role, String email, Boolean isActive) {
+        this.name = name;
         this.password = encryptedPassword;
         this.email = email;
-        this.fullName = fullName;
         this.role = role;
+        this.isActive = isActive;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ADMIN"), new SimpleGrantedAuthority("USER"));
-        else return List.of(new SimpleGrantedAuthority("USER"));
+        if (role == UserRole.MANAGER) return List.of(new SimpleGrantedAuthority("MANAGER"), new SimpleGrantedAuthority("OPERATOR"), new SimpleGrantedAuthority("VIEWER"));
+        else if (role == UserRole.OPERATOR) return List.of(new SimpleGrantedAuthority("OPERATOR"), new SimpleGrantedAuthority("VIEWER"));
+        else if (role == UserRole.VIEWER) return List.of(new SimpleGrantedAuthority("VIEWER"));
+        else return List.of(new SimpleGrantedAuthority("VIEWER"));
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -82,7 +98,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return Boolean.TRUE.equals(this.isActive);
     }
 
 }
