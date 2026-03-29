@@ -59,6 +59,12 @@ API de inventário construída com Spring Boot, JPA/Hibernate e autenticação b
 - **Usuários**
   - `GET /api/v1/users/{id}` — requer `MANAGER`
   - `PATCH /api/v1/users/{id}` — requer `MANAGER`
+- **Categorias**
+  - `GET /api/v1/categories` — lista categorias (público)
+  - `GET /api/v1/categories/{id}` — detalha categoria (público)
+  - `POST /api/v1/categories` — requer `MANAGER`
+  - `PATCH /api/v1/categories/{id}` — requer `MANAGER`
+  - `DELETE /api/v1/categories/{id}` — remove categoria (requer `MANAGER`)
 - **Produtos**
   - `GET /api/v1/products` — lista produtos (público)
   - `GET /api/v1/products/{id}` — detalha produto (público)

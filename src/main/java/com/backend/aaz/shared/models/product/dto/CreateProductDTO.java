@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.backend.aaz.shared.models.product.enums.UnitOfMeasure;
+import com.backend.aaz.shared.validation.annotations.ValidBarcode;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +21,7 @@ public record CreateProductDTO(
     UUID categoryId,
 
     @NotBlank
+    @ValidBarcode
     String barcode,
 
     @NotNull
