@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.backend.aaz.shared.models.audit.AuditEntry;
 import com.backend.aaz.shared.models.user.enums.UserRole;
 
 import jakarta.persistence.Column;
@@ -18,6 +19,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -57,6 +59,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "actor")
+    private List<AuditEntry> auditEntries;
 
     public User(String name, String encryptedPassword, UserRole role, String email, Boolean isActive) {
         this.name = name;
